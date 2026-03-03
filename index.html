@@ -29,30 +29,11 @@ body {
   background: var(--bg);
   color: var(--text);
   overflow-x: hidden;
-  cursor: none;
+  cursor: default;
 }
 
 /* Custom cursor */
-.cursor {
-  width: 8px; height: 8px;
-  background: var(--orange);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s;
-}
-.cursor-ring {
-  width: 32px; height: 32px;
-  border: 1px solid rgba(232,68,10,0.4);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: all 0.15s ease;
-}
+.cursor, .cursor-ring { display: none; }
 
 /* Scanline overlay */
 body::after {
@@ -128,7 +109,7 @@ nav.scrolled {
   color: white;
   border: none;
   padding: 10px 22px;
-  cursor: none;
+  cursor: pointer;
   transition: all 0.2s;
   text-decoration: none;
 }
@@ -204,7 +185,7 @@ nav.scrolled {
   color: white;
   border: none;
   padding: 16px 32px;
-  cursor: none;
+  cursor: pointer;
   text-decoration: none;
   transition: all 0.2s;
   display: inline-block;
@@ -738,7 +719,340 @@ footer {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ========== MOBILE RESPONSIVE ========== */
+
+  /* SOFTWARE SECTION */
+  .software-grid { }
+
+
+
+  .tool-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 12px;
+    border: 1px solid #1e1e1e;
+    background: #0a0a0a;
+    transition: all 0.25s;
+    cursor: default;
+    text-align: center;
+  }
+  .tool-card:hover {
+    background: #111;
+    border-color: #2a2a2a;
+    transform: translateY(-3px);
+  }
+  .tool-card-icon {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s;
+  }
+  .tool-card:hover .tool-card-icon { transform: scale(1.08); }
+  .tool-card-name {
+    font-family: var(--cond);
+    font-weight: 800;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    line-height: 1;
+  }
+  .tool-card-role {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: #444;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .tool-card { padding: 14px 8px; }
+    .tool-card-icon { width: 44px; height: 44px; }
+    .tool-card-name { font-size: 11px; }
+  }
+
+  .tool-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #111;
+    border: 1px solid #222;
+    padding: 7px 14px;
+    transition: all 0.2s;
+  }
+  .tool-pill span {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #777;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .tool-pill:hover {
+    border-color: rgba(232,68,10,0.4);
+    background: rgba(232,68,10,0.05);
+  }
+  .tool-pill:hover span { color: var(--text); }
+
+  @media (max-width: 768px) {
+    .tool-pill span { font-size: 10px; }
+  
+  .tool-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 12px;
+    border: 1px solid #1e1e1e;
+    background: #0a0a0a;
+    transition: all 0.25s;
+    cursor: default;
+    text-align: center;
+  }
+  .tool-card:hover {
+    background: #111;
+    border-color: #2a2a2a;
+    transform: translateY(-3px);
+  }
+  .tool-card-icon {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s;
+  }
+  .tool-card:hover .tool-card-icon { transform: scale(1.08); }
+  .tool-card-name {
+    font-family: var(--cond);
+    font-weight: 800;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    line-height: 1;
+  }
+  .tool-card-role {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: #444;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .tool-card { padding: 14px 8px; }
+    .tool-card-icon { width: 44px; height: 44px; }
+    .tool-card-name { font-size: 11px; }
+  }
+
+  .tool-pill { padding: 6px 10px; }
+  }
+
+  .soft-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 44px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .soft-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--orange);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  .soft-card:hover { background: var(--surface2); transform: translateY(-4px); }
+  .soft-card:hover::before { transform: scaleX(1); }
+
+  .soft-icon {
+    width: 72px; height: 72px;
+    display: flex; align-items: center; justify-content: center;
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 16px;
+    transition: border-color 0.3s;
+  }
+  .soft-card:hover .soft-icon { border-color: rgba(232,68,10,0.3); }
+
+  .soft-name {
+    font-family: var(--cond);
+    font-weight: 800;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text);
+  }
+  .soft-desc {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.5;
+  }
+  .soft-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--orange);
+    border: 1px solid rgba(232,68,10,0.3);
+    padding: 4px 10px;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .software-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  
+
+  .tool-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 12px;
+    border: 1px solid #1e1e1e;
+    background: #0a0a0a;
+    transition: all 0.25s;
+    cursor: default;
+    text-align: center;
+  }
+  .tool-card:hover {
+    background: #111;
+    border-color: #2a2a2a;
+    transform: translateY(-3px);
+  }
+  .tool-card-icon {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s;
+  }
+  .tool-card:hover .tool-card-icon { transform: scale(1.08); }
+  .tool-card-name {
+    font-family: var(--cond);
+    font-weight: 800;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    line-height: 1;
+  }
+  .tool-card-role {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: #444;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .tool-card { padding: 14px 8px; }
+    .tool-card-icon { width: 44px; height: 44px; }
+    .tool-card-name { font-size: 11px; }
+  }
+
+  .tool-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #111;
+    border: 1px solid #222;
+    padding: 7px 14px;
+    transition: all 0.2s;
+  }
+  .tool-pill span {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #777;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .tool-pill:hover {
+    border-color: rgba(232,68,10,0.4);
+    background: rgba(232,68,10,0.05);
+  }
+  .tool-pill:hover span { color: var(--text); }
+
+  @media (max-width: 768px) {
+    .tool-pill span { font-size: 10px; }
+  
+  .tool-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 12px;
+    border: 1px solid #1e1e1e;
+    background: #0a0a0a;
+    transition: all 0.25s;
+    cursor: default;
+    text-align: center;
+  }
+  .tool-card:hover {
+    background: #111;
+    border-color: #2a2a2a;
+    transform: translateY(-3px);
+  }
+  .tool-card-icon {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s;
+  }
+  .tool-card:hover .tool-card-icon { transform: scale(1.08); }
+  .tool-card-name {
+    font-family: var(--cond);
+    font-weight: 800;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    line-height: 1;
+  }
+  .tool-card-role {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: #444;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .tool-card { padding: 14px 8px; }
+    .tool-card-icon { width: 44px; height: 44px; }
+    .tool-card-name { font-size: 11px; }
+  }
+
+  .tool-pill { padding: 6px 10px; }
+  }
+
+  .soft-card { padding: 28px 16px; gap: 10px; }
+    .soft-name { font-size: 16px; }
+    #software { padding: 60px 20px !important; }
+  }
+
+  /* ========== MOBILE RESPONSIVE ========== */
 @media (max-width: 768px) {
 
   /* NAV */
@@ -967,7 +1281,7 @@ footer {
   <div class="burger" id="burger" style="display:none;" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </div>
-  <a href="#cta" class="nav-cta">JOIN_NOW</a>
+  <a href="#" class="nav-cta" onclick="event.preventDefault();openPopup()">JOIN_NOW</a>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="#directions" onclick="closeMenu()">// Напрямки</a>
@@ -1140,15 +1454,80 @@ footer {
       <h2 class="intensive-title">TEXTURING</h2>
       <h2 class="intensive-subtitle">INTENSIVE</h2>
       <p class="intensive-desc">Поглиблений інтенсив із сучасних робочих процесів текстурування. Створення матеріалів, принципи PBR та production-ready ассети. Реальний AAA-пайплайн від художника, який живе в ньому щодня.</p>
-      <div class="intensive-tags">
-        <span class="itag">SUBSTANCE PAINTER</span>
-        <span class="itag">PBR WORKFLOW</span>
-        <span class="itag">MARMOSET</span>
-        <span class="itag">ZBrush</span>
-        <span class="itag">AAA PIPELINE</span>
-        <span class="itag">3 ТИЖНІ</span>
+      <!-- Level badge -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px;">
+        <span style="font-family:var(--mono);font-size:10px;color:#444;letter-spacing:0.15em;text-transform:uppercase;">[ РІВЕНЬ ]</span>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <span style="font-family:var(--mono);font-size:11px;color:var(--orange);border:1px solid rgba(232,68,10,0.4);padding:4px 12px;letter-spacing:0.1em;text-transform:uppercase;">JUNIOR</span>
+          <span style="font-family:var(--mono);font-size:11px;color:#555;letter-spacing:0.1em;">→</span>
+          <span style="font-family:var(--mono);font-size:11px;color:var(--text);border:1px solid #333;padding:4px 12px;letter-spacing:0.1em;text-transform:uppercase;">MID</span>
+        </div>
       </div>
-      <a href="#cta" class="btn-primary">NOTIFY_ME →</a>
+
+      <p style="font-family:var(--mono);font-size:10px;color:#444;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:14px;">[ TOOLS_WE_USE ]</p>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:36px;">
+
+        <!-- Blender — original logo grayscale -->
+        <div class="tool-card">
+          <div class="tool-card-icon" style="background:#0d0d0d;border-color:#1e1e1e;">
+            <svg viewBox="0 0 256 256" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
+              <g fill="#555" opacity="0.9">
+                <path d="M102.42 0H153.58L256 176H0Z" opacity="0.4"/>
+                <circle cx="128" cy="164" r="72"/>
+                <circle cx="128" cy="164" r="40" fill="#0d0d0d"/>
+                <path d="M68 164 A60 60 0 0 1 188 164" fill="none" stroke="#555" stroke-width="16"/>
+              </g>
+            </svg>
+          </div>
+          <div class="tool-card-name">Blender</div>
+          <div class="tool-card-role">Моделювання</div>
+        </div>
+
+        <!-- Substance Painter — SP wordmark style -->
+        <div class="tool-card">
+          <div class="tool-card-icon" style="background:#0d0d0d;border-color:#1e1e1e;">
+            <svg viewBox="0 0 64 64" width="36" height="36">
+              <g fill="none" stroke="#555" stroke-width="3" opacity="0.9">
+                <path d="M32 8 C18 8 8 18 8 32 C8 46 18 56 32 56 C46 56 56 46 56 32" stroke-linecap="round"/>
+                <path d="M44 8 C44 8 56 20 56 32" stroke-linecap="round" opacity="0.5"/>
+                <circle cx="32" cy="32" r="10" fill="#555" stroke="none" opacity="0.7"/>
+                <circle cx="32" cy="32" r="4" fill="#0d0d0d" stroke="none"/>
+              </g>
+            </svg>
+          </div>
+          <div class="tool-card-name">Substance</div>
+          <div class="tool-card-role">Текстурування</div>
+        </div>
+
+        <!-- PureRef — window/layers style -->
+        <div class="tool-card">
+          <div class="tool-card-icon" style="background:#0d0d0d;border-color:#1e1e1e;">
+            <svg viewBox="0 0 64 64" width="36" height="36">
+              <g opacity="0.9">
+                <rect x="8" y="12" width="32" height="26" rx="3" fill="none" stroke="#555" stroke-width="3"/>
+                <rect x="18" y="22" width="32" height="26" rx="3" fill="#0d0d0d" stroke="#555" stroke-width="3" opacity="0.8"/>
+                <rect x="24" y="16" width="10" height="7" rx="1" fill="#555" opacity="0.5"/>
+              </g>
+            </svg>
+          </div>
+          <div class="tool-card-name">PureRef</div>
+          <div class="tool-card-role">Референси</div>
+        </div>
+
+        <!-- Photoshop — Ps lettermark -->
+        <div class="tool-card">
+          <div class="tool-card-icon" style="background:#0d0d0d;border-color:#1e1e1e;">
+            <svg viewBox="0 0 64 64" width="36" height="36">
+              <rect x="6" y="6" width="52" height="52" rx="8" fill="none" stroke="#555" stroke-width="3" opacity="0.9"/>
+              <text x="32" y="44" font-family="Arial Black,Arial" font-weight="900" font-size="26" fill="#555" text-anchor="middle" opacity="0.9">Ps</text>
+            </svg>
+          </div>
+          <div class="tool-card-name">Photoshop</div>
+          <div class="tool-card-role">Постобробка</div>
+        </div>
+
+      </div>
+      <a href="#" class="btn-primary" onclick="event.preventDefault();openPopup()">NOTIFY_ME →</a>
     </div>
     <div class="intensive-right">
       <div class="grid-bg"></div>
@@ -1168,12 +1547,13 @@ footer {
   </div>
 </section>
 
+
 <!-- CTA -->
 <section class="cta-section" id="cta">
   <p class="cta-tag reveal">[ JOIN_ENROLLMENT_V4.0 ]</p>
   <h2 class="cta-title reveal">ГОТОВИЙ<br>СТВОРЮВАТИ<br>ГРАФІКУ<br>ДЛЯ ІГОР?</h2>
   <p class="cta-sub reveal">Розпочни свій шлях у 3D разом з <span>HitPoint School</span></p>
-  <a href="mailto:info@hitpointschool.com" class="btn-primary reveal">ПРИЄДНАТИСЯ ДО НАВЧАННЯ →</a>
+  <a href="#" class="btn-primary reveal" onclick="event.preventDefault();openPopup()">ПРИЄДНАТИСЯ ДО НАВЧАННЯ →</a>
 </section>
 
 <!-- FOOTER -->
@@ -1224,33 +1604,7 @@ window.addEventListener('resize', checkBurger);
 checkBurger();
 
 // Cursor
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-function animCursor() {
-  cursor.style.left = mx + 'px';
-  cursor.style.top = my + 'px';
-  rx += (mx - rx) * 0.12;
-  ry += (my - ry) * 0.12;
-  ring.style.left = rx + 'px';
-  ring.style.top = ry + 'px';
-  requestAnimationFrame(animCursor);
-}
-animCursor();
 
-document.querySelectorAll('a, button').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    ring.style.transform = 'translate(-50%,-50%) scale(1.8)';
-    ring.style.borderColor = 'rgba(232,68,10,0.8)';
-    cursor.style.transform = 'translate(-50%,-50%) scale(0.5)';
-  });
-  el.addEventListener('mouseleave', () => {
-    ring.style.transform = 'translate(-50%,-50%) scale(1)';
-    ring.style.borderColor = 'rgba(232,68,10,0.4)';
-    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
-  });
-});
 
 // Nav scroll
 const nav = document.getElementById('nav');
@@ -1285,7 +1639,7 @@ reveals.forEach(el => observer.observe(el));
   width: 56px; height: 56px;
   background: var(--orange);
   border: none;
-  cursor: none;
+  cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 0 0 0 rgba(232,68,10,0.4);
   animation: chatPulse 2s infinite;
@@ -1425,7 +1779,7 @@ reveals.forEach(el => observer.observe(el));
   color: var(--muted);
   border: 1px solid #2a2a2a;
   padding: 5px 10px;
-  cursor: none;
+  cursor: pointer;
   background: transparent;
   transition: all 0.2s;
 }
@@ -1480,7 +1834,7 @@ reveals.forEach(el => observer.observe(el));
   width: 36px; height: 36px;
   background: var(--orange);
   border: none;
-  cursor: none;
+  cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
   transition: all 0.2s;
@@ -1740,6 +2094,87 @@ async function sendChat() {
 chatSend.addEventListener('click', sendChat);
 chatInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); } });
 chatInput.addEventListener('input', () => { chatInput.style.height = 'auto'; chatInput.style.height = Math.min(chatInput.scrollHeight, 80) + 'px'; });
+</script>
+
+
+<!-- POPUP -->
+<div id="popup-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(6px);">
+  <div id="popup-box" style="background:#0e0e0e;border:1px solid #2a2a2a;width:100%;max-width:540px;margin:20px;position:relative;animation:popupIn 0.3s ease;">
+    
+    <!-- Top bar -->
+    <div style="background:#111;border-bottom:1px solid #1e1e1e;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;">
+      <span style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.15em;text-transform:uppercase;">[ JOIN_ENROLLMENT_V4.0 ]</span>
+      <button onclick="closePopup()" style="background:none;border:none;color:#555;font-size:20px;cursor:pointer;line-height:1;transition:color 0.2s;" onmouseenter="this.style.color='var(--orange)'" onmouseleave="this.style.color='#555'">✕</button>
+    </div>
+
+    <!-- Content -->
+    <div style="padding:40px 32px;">
+      <h2 style="font-family:var(--cond);font-weight:900;font-size:48px;text-transform:uppercase;line-height:0.95;letter-spacing:-0.01em;margin-bottom:8px;">WE <span style="color:var(--orange);">SEE</span> U</h2>
+      <p style="font-family:var(--mono);font-size:11px;color:#555;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:32px;">МИ ЗВ'ЯЖЕМОСЬ З ТОБОЮ ПЕРШИМИ</p>
+
+      <!-- Form -->
+      <div id="popup-form">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+          <input id="f-name" type="text" placeholder="Ім'я та Прізвище" style="background:#111;border:1px solid #222;color:var(--text);font-family:var(--body);font-size:14px;padding:13px 16px;outline:none;width:100%;transition:border-color 0.2s;" onfocus="this.style.borderColor='rgba(232,68,10,0.5)'" onblur="this.style.borderColor='#222'">
+          <input id="f-email" type="email" placeholder="E-mail" style="background:#111;border:1px solid #222;color:var(--text);font-family:var(--body);font-size:14px;padding:13px 16px;outline:none;width:100%;transition:border-color 0.2s;" onfocus="this.style.borderColor='rgba(232,68,10,0.5)'" onblur="this.style.borderColor='#222'">
+        </div>
+        <input id="f-phone" type="tel" placeholder="Телефон (необов'язково)" style="background:#111;border:1px solid #222;color:var(--text);font-family:var(--body);font-size:14px;padding:13px 16px;outline:none;width:100%;margin-bottom:24px;transition:border-color 0.2s;box-sizing:border-box;" onfocus="this.style.borderColor='rgba(232,68,10,0.5)'" onblur="this.style.borderColor='#222'">
+        
+        <button onclick="submitPopup()" style="width:100%;background:var(--orange);border:none;color:white;font-family:var(--mono);font-size:12px;letter-spacing:0.15em;text-transform:uppercase;padding:16px;cursor:pointer;transition:all 0.2s;" onmouseenter="this.style.background='var(--orange2)'" onmouseleave="this.style.background='var(--orange)'">
+          НАДІСЛАТИ →
+        </button>
+        <p id="popup-error" style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.1em;margin-top:10px;display:none;">[ ЗАПОВНИ ІМ'Я ТА EMAIL ]</p>
+      </div>
+
+      <!-- Success state -->
+      <div id="popup-success" style="display:none;text-align:center;padding:20px 0;">
+        <div style="font-size:40px;margin-bottom:16px;">🎯</div>
+        <h3 style="font-family:var(--cond);font-weight:900;font-size:32px;text-transform:uppercase;color:var(--orange);margin-bottom:8px;">ПРИЙНЯТО</h3>
+        <p style="font-family:var(--mono);font-size:11px;color:#555;letter-spacing:0.1em;text-transform:uppercase;line-height:1.8;">МИ ОТРИМАЛИ ТВОЮ ЗАЯВКУ<br>ЗВ'ЯЖЕМОСЬ ПЕРШИМИ ЯК ВІДКРИЄМО РЕЄСТРАЦІЮ</p>
+      </div>
+    </div>
+
+    <!-- Corner decorations -->
+    <div style="position:absolute;top:0;left:0;width:12px;height:12px;border-top:2px solid var(--orange);border-left:2px solid var(--orange);"></div>
+    <div style="position:absolute;top:0;right:0;width:12px;height:12px;border-top:2px solid var(--orange);border-right:2px solid var(--orange);"></div>
+    <div style="position:absolute;bottom:0;left:0;width:12px;height:12px;border-bottom:2px solid var(--orange);border-left:2px solid var(--orange);"></div>
+    <div style="position:absolute;bottom:0;right:0;width:12px;height:12px;border-bottom:2px solid var(--orange);border-right:2px solid var(--orange);"></div>
+  </div>
+</div>
+
+<style>
+@keyframes popupIn {
+  from { opacity:0; transform:translateY(16px) scale(0.97); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
+}
+</style>
+
+<script>
+function openPopup() {
+  const o = document.getElementById('popup-overlay');
+  o.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closePopup() {
+  document.getElementById('popup-overlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+function submitPopup() {
+  const name = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const err = document.getElementById('popup-error');
+  if (!name || !email) { err.style.display = 'block'; return; }
+  err.style.display = 'none';
+  document.getElementById('popup-form').style.display = 'none';
+  document.getElementById('popup-success').style.display = 'block';
+  setTimeout(closePopup, 3000);
+}
+// Close on overlay click
+document.getElementById('popup-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closePopup();
+});
+// Close on ESC
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
 </script>
 
 </body>
