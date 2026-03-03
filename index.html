@@ -1052,6 +1052,10 @@ footer {
     #software { padding: 60px 20px !important; }
   }
 
+  /* Hide mobile elements on desktop */
+  .mobile-menu { display: none !important; }
+  .burger { display: none !important; }
+
   /* ========== MOBILE RESPONSIVE ========== */
 @media (max-width: 768px) {
 
@@ -1092,15 +1096,20 @@ footer {
   .burger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
   .mobile-menu {
-    display: none;
-    width: 100%;
-    background: #0e0e0e;
+    display: none !important;
+    position: fixed;
+    top: 56px;
+    left: 0; right: 0;
+    background: rgba(8,8,8,0.98);
     border-top: 1px solid #1e1e1e;
-    padding: 16px 0;
+    border-bottom: 1px solid #1e1e1e;
+    padding: 8px 0;
     flex-direction: column;
     gap: 0;
+    z-index: 99;
+    backdrop-filter: blur(10px);
   }
-  .mobile-menu.open { display: flex; }
+  .mobile-menu.open { display: flex !important; }
   .mobile-menu a {
     font-family: var(--mono);
     font-size: 13px;
