@@ -737,6 +737,216 @@ footer {
   opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+
+/* ========== MOBILE RESPONSIVE ========== */
+@media (max-width: 768px) {
+
+  /* NAV */
+  nav {
+    padding: 16px 20px;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+  nav.scrolled { padding: 12px 20px; }
+
+  .nav-links { display: none; }
+
+  .nav-cta {
+    font-size: 10px;
+    padding: 8px 14px;
+  }
+
+  /* Burger menu */
+  .burger {
+    display: flex !important;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    margin-left: auto;
+    margin-right: 12px;
+  }
+  .burger span {
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    transition: all 0.3s;
+    display: block;
+  }
+  .burger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .burger.open span:nth-child(2) { opacity: 0; }
+  .burger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  .mobile-menu {
+    display: none;
+    width: 100%;
+    background: #0e0e0e;
+    border-top: 1px solid #1e1e1e;
+    padding: 16px 0;
+    flex-direction: column;
+    gap: 0;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 20px;
+    border-bottom: 1px solid #1a1a1a;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--orange); }
+
+  /* HERO */
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: 100svh;
+  }
+  .hero-left {
+    padding: 100px 20px 60px;
+    order: 2;
+    z-index: 2;
+  }
+  .hero-right {
+    position: absolute;
+    inset: 0;
+    opacity: 0.3;
+    order: 1;
+  }
+  .hero-title {
+    font-size: clamp(52px, 16vw, 80px);
+    margin-bottom: 20px;
+  }
+  .hero-desc {
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .btn-primary { width: 100%; text-align: center; padding: 14px 24px; }
+  .hero-stats {
+    bottom: 24px;
+    right: 20px;
+    gap: 16px;
+  }
+  .stat-num { font-size: 28px; }
+
+  /* TICKER */
+  .ticker-item { font-size: 10px; padding: 0 24px; }
+
+  /* SECTIONS */
+  section { padding: 60px 20px; }
+
+  .section-title {
+    font-size: clamp(36px, 10vw, 56px);
+    margin-bottom: 40px;
+  }
+
+  /* DIRECTIONS */
+  .directions-grid {
+    grid-template-columns: 1fr;
+  }
+  .direction-card {
+    padding: 32px 24px;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+  .direction-card:last-child { border-bottom: none !important; }
+  .dir-title { font-size: 24px; }
+
+  /* WHY */
+  .why-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+  .why-card { padding: 28px 24px; }
+  .why-card-title { font-size: 18px; }
+
+  /* PORTFOLIO */
+  #portfolio { padding: 60px 0 0; }
+  #portfolio .section-tag,
+  #portfolio h2,
+  #portfolio p { padding: 0 20px; }
+  #portfolio > div[style*="grid"] {
+    grid-template-columns: 1fr !important;
+    margin: 0 !important;
+  }
+  #portfolio > div[style*="grid"] > div {
+    aspect-ratio: 4/3 !important;
+  }
+
+  /* INTENSIVE */
+  .intensive-inner {
+    grid-template-columns: 1fr;
+  }
+  .intensive-left {
+    padding: 60px 20px;
+    order: 2;
+  }
+  .intensive-right {
+    height: 280px;
+    order: 1;
+  }
+  .intensive-title { font-size: clamp(42px, 12vw, 70px); }
+  .intensive-subtitle { font-size: clamp(42px, 12vw, 70px); }
+  .intensive-tags { gap: 6px; }
+  .itag { font-size: 9px; }
+  .btn-primary { font-size: 11px; }
+
+  /* CTA */
+  .cta-section { padding: 80px 20px; }
+  .cta-title {
+    font-size: clamp(40px, 12vw, 72px);
+    margin-bottom: 28px;
+  }
+  .cta-sub { font-size: 14px; margin-bottom: 36px; }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 20px;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  .footer-right {
+    margin-right: 0 !important;
+    justify-content: center;
+  }
+  .footer-center { order: 3; }
+
+  /* CHAT */
+  .chat-widget {
+    bottom: 20px;
+    right: 16px;
+  }
+  .chat-box {
+    width: calc(100vw - 32px);
+    right: 0;
+    bottom: 64px;
+  }
+  .chat-messages { height: 240px; }
+
+  /* CURSOR — hide on mobile */
+  .cursor, .cursor-ring { display: none; }
+  body { cursor: auto; }
+  a, button { cursor: pointer; }
+}
+
+@media (max-width: 400px) {
+  .hero-title { font-size: 48px; }
+  .section-title { font-size: 34px; }
+  .cta-title { font-size: 36px; }
+}
+
 </style>
 </head>
 <body>
@@ -754,8 +964,18 @@ footer {
     <li><a href="#portfolio">// Роботи</a></li>
     <li><a href="#intensive">// Інтенсив</a></li>
   </ul>
+  <div class="burger" id="burger" style="display:none;" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
   <a href="#cta" class="nav-cta">JOIN_NOW</a>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#directions" onclick="closeMenu()">// Напрямки</a>
+  <a href="#why" onclick="closeMenu()">// Чому ми</a>
+  <a href="#portfolio" onclick="closeMenu()">// Роботи</a>
+  <a href="#intensive" onclick="closeMenu()">// Інтенсив</a>
+  <a href="#cta" onclick="closeMenu()" style="color:var(--orange);border-bottom:none;">→ JOIN NOW</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -982,6 +1202,26 @@ document.querySelectorAll('.portfolio-img').forEach(img => {
   img.parentElement.addEventListener('mouseenter', () => img.style.transform = 'scale(1.04)');
   img.parentElement.addEventListener('mouseleave', () => img.style.transform = 'scale(1)');
 });
+
+
+// Burger menu
+function toggleMenu() {
+  const burger = document.getElementById('burger');
+  const menu = document.getElementById('mobileMenu');
+  burger.classList.toggle('open');
+  menu.classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('burger').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+// Show burger only on mobile
+function checkBurger() {
+  const burger = document.getElementById('burger');
+  burger.style.display = window.innerWidth <= 768 ? 'flex' : 'none';
+}
+window.addEventListener('resize', checkBurger);
+checkBurger();
 
 // Cursor
 const cursor = document.getElementById('cursor');
