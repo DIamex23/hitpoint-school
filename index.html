@@ -1692,233 +1692,183 @@ reveals.forEach(el => observer.observe(el));
 
 <!-- CHATBOT -->
 <style>
+<style>
 .chat-widget {
   position: fixed;
   bottom: 32px;
   right: 32px;
-  z-index: 500;
+  z-index: 9999;
   font-family: var(--body);
 }
-
-.chat-toggle {
-  width: 56px; height: 56px;
-  background: var(--orange);
-  border: none;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 0 0 0 rgba(232,68,10,0.4);
-  animation: chatPulse 2s infinite;
-  transition: background 0.2s;
-  position: relative;
-  z-index: 2;
-}
-.chat-toggle:hover { background: var(--orange2); }
-@keyframes chatPulse {
-  0% { box-shadow: 0 0 0 0 rgba(232,68,10,0.4); }
-  70% { box-shadow: 0 0 0 14px rgba(232,68,10,0); }
-  100% { box-shadow: 0 0 0 0 rgba(232,68,10,0); }
-}
-.chat-toggle svg { width: 22px; height: 22px; fill: white; transition: transform 0.3s; }
-.chat-toggle.open svg { transform: rotate(45deg); }
-
 .chat-box {
   position: absolute;
   bottom: 68px;
   right: 0;
-  width: 360px;
-  background: #0e0e0e;
-  border: 1px solid #2a2a2a;
+  width: 380px;
+  background: #080808;
+  border: 1px solid rgba(232,68,10,0.5);
   display: none;
   flex-direction: column;
-  overflow: hidden;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.6);
-  animation: chatOpen 0.25s ease;
+  box-shadow: 0 0 40px rgba(232,68,10,0.1), 0 20px 60px rgba(0,0,0,0.8);
 }
 .chat-box.open { display: flex; }
-@keyframes chatOpen {
-  from { opacity:0; transform: translateY(12px) scale(0.97); }
-  to   { opacity:1; transform: translateY(0) scale(1); }
+.chat-box-topline {
+  height: 2px;
+  background: var(--orange);
+  flex-shrink: 0;
 }
-
 .chat-header {
-  background: #111;
-  border-bottom: 1px solid #1e1e1e;
-  padding: 14px 18px;
   display: flex;
   align-items: center;
   gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #111;
+  background: #050505;
 }
-.chat-header-icon {
-  width: 36px; height: 36px;
-  background: var(--orange);
+.chat-header-badge {
+  width: 34px; height: 34px;
+  border: 1px solid rgba(232,68,10,0.4);
   display: flex; align-items: center; justify-content: center;
-  font-size: 16px;
   flex-shrink: 0;
+  background: rgba(232,68,10,0.06);
 }
-.chat-header-info h4 {
+.chat-header-badge svg { width: 16px; height: 16px; fill: var(--orange); }
+.chat-header-title {
   font-family: var(--cond);
-  font-weight: 800;
-  font-size: 14px;
+  font-weight: 900;
+  font-size: 13px;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text);
-}
-.chat-header-info p {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: #555;
   letter-spacing: 0.1em;
-  margin-top: 2px;
+  color: var(--text);
+  line-height: 1.1;
+}
+.chat-header-title span { color: var(--orange); }
+.chat-header-sub {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: #333;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 .chat-status-dot {
-  width: 6px; height: 6px;
-  background: #3ECF8E;
+  width: 5px; height: 5px;
+  background: #2ecc71;
   border-radius: 50%;
   display: inline-block;
-  margin-right: 4px;
-  box-shadow: 0 0 5px #3ECF8E;
-  animation: chatPulse2 2s infinite;
+  animation: pulse 1.5s infinite;
 }
-@keyframes chatPulse2 { 0%,100%{opacity:1} 50%{opacity:0.4} }
-
 .chat-messages {
-  height: 280px;
+  height: 300px;
   overflow-y: auto;
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #1a1a1a transparent;
+  background: #080808;
 }
-.chat-messages::-webkit-scrollbar { width: 3px; }
-.chat-messages::-webkit-scrollbar-thumb { background: #222; }
-
-.cmsg {
-  display: flex;
-  gap: 8px;
-  animation: msgIn 0.25s ease;
-}
-@keyframes msgIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+.cmsg { display: flex; gap: 8px; align-items: flex-start; }
 .cmsg.user { flex-direction: row-reverse; }
-
 .cmsg-av {
-  width: 28px; height: 28px;
+  width: 26px; height: 26px;
+  border: 1px solid rgba(232,68,10,0.3);
+  background: rgba(232,68,10,0.08);
   display: flex; align-items: center; justify-content: center;
-  font-size: 12px;
   flex-shrink: 0;
-  margin-top: 2px;
 }
-.cmsg.bot .cmsg-av { background: var(--orange); }
-.cmsg.user .cmsg-av { background: #1a1a1a; border: 1px solid #2a2a2a; }
-
+.cmsg-av svg { width: 13px; height: 13px; fill: var(--orange); }
+.cmsg.user .cmsg-av { background: #111; border-color: #222; }
+.cmsg.user .cmsg-av svg { fill: #444; }
 .cbubble {
-  max-width: 80%;
-  padding: 9px 13px;
   font-size: 13px;
-  line-height: 1.55;
+  line-height: 1.6;
+  padding: 10px 14px;
+  max-width: 82%;
   color: var(--text);
 }
-.cmsg.bot .cbubble {
-  background: #141414;
-  border: 1px solid #222;
-  border-radius: 0 10px 10px 10px;
-}
-.cmsg.user .cbubble {
-  background: #1a1a24;
-  border: 1px solid #2a2a3a;
-  border-radius: 10px 0 10px 10px;
-  color: #aab4cc;
-}
-
-.chat-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 8px;
-}
+.cmsg.bot .cbubble { background: #0e0e0e; border: 1px solid #1a1a1a; border-left: 2px solid rgba(232,68,10,0.5); }
+.cmsg.user .cbubble { background: var(--orange); color: white; }
+.chat-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
 .chat-chip {
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  border: 1px solid #2a2a2a;
-  padding: 5px 10px;
-  cursor: pointer;
+  font-size: 9px;
+  color: var(--orange);
+  border: 1px solid rgba(232,68,10,0.3);
   background: transparent;
+  padding: 4px 9px;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   transition: all 0.2s;
 }
-.chat-chip:hover { border-color: var(--orange); color: var(--orange); background: rgba(232,68,10,0.06); }
-
-.chat-typing {
-  display: flex; gap: 8px; align-items: center;
-}
-.chat-dots {
-  display: flex; gap: 3px;
-  padding: 10px 14px;
-  background: #141414;
-  border: 1px solid #222;
-  border-radius: 0 10px 10px 10px;
-}
-.chat-dot {
-  width: 5px; height: 5px;
-  background: #444;
-  border-radius: 50%;
-  animation: dotBounce 1.2s infinite;
-}
+.chat-chip:hover { background: rgba(232,68,10,0.1); border-color: var(--orange); }
+.chat-typing { display: flex; gap: 8px; align-items: center; }
+.chat-dots { display: flex; gap: 4px; padding: 10px 14px; background: #0e0e0e; border: 1px solid #1a1a1a; border-left: 2px solid rgba(232,68,10,0.5); }
+.chat-dot { width: 5px; height: 5px; background: #2a2a2a; border-radius: 50%; animation: chatDot 1.2s infinite; }
 .chat-dot:nth-child(2) { animation-delay: 0.2s; }
 .chat-dot:nth-child(3) { animation-delay: 0.4s; }
-@keyframes dotBounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-4px);background:var(--orange)} }
-
-.chat-input-row {
-  border-top: 1px solid #1e1e1e;
-  padding: 12px 14px;
-  display: flex;
-  gap: 8px;
-  background: #0a0a0a;
-}
+@keyframes chatDot { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-5px);background:var(--orange);} }
+.chat-input-row { display: flex; border-top: 1px solid #111; background: #050505; }
 .chat-input {
   flex: 1;
-  background: #141414;
-  border: 1px solid #222;
-  color: var(--text);
-  font-family: var(--body);
-  font-size: 13px;
-  padding: 8px 12px;
-  outline: none;
-  resize: none;
-  max-height: 80px;
-  min-height: 36px;
-  line-height: 1.4;
-  transition: border-color 0.2s;
-}
-.chat-input:focus { border-color: rgba(232,68,10,0.4); }
-.chat-input::placeholder { color: #444; }
-
-.chat-send {
-  width: 36px; height: 36px;
-  background: var(--orange);
+  background: transparent;
   border: none;
+  outline: none;
+  padding: 13px 14px;
+  font-size: 12px;
+  color: var(--text);
+  font-family: var(--mono);
+  resize: none;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+}
+.chat-input::placeholder { color: #222; font-family: var(--mono); letter-spacing: 0.1em; font-size: 10px; text-transform: uppercase; }
+.chat-send { width: 46px; background: var(--orange); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; flex-shrink: 0; }
+.chat-send:hover { background: var(--orange2); }
+.chat-send:disabled { opacity: 0.3; cursor: default; }
+.chat-send svg { width: 14px; height: 14px; fill: white; }
+.chat-footer-tag { font-family: var(--mono); font-size: 8px; color: #1a1a1a; letter-spacing: 0.15em; text-transform: uppercase; text-align: center; padding: 5px; background: #030303; border-top: 1px solid #0e0e0e; }
+.chat-toggle {
+  width: 50px; height: 50px;
+  background: var(--orange);
+  border: 1px solid rgba(232,68,10,0.5);
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(232,68,10,0.2), 0 8px 24px rgba(232,68,10,0.3);
+  animation: chatPulse 2.5s infinite;
   transition: all 0.2s;
-  align-self: flex-end;
 }
-.chat-send:hover { background: var(--orange2); }
-.chat-send:disabled { opacity: 0.3; }
-.chat-send svg { width: 15px; height: 15px; fill: white; }
+.chat-toggle:hover { background: var(--orange2); animation: none; }
+.chat-toggle svg { width: 20px; height: 20px; fill: white; transition: transform 0.3s; }
+.chat-toggle.open svg { transform: rotate(90deg); }
+@keyframes chatPulse {
+  0%,100% { box-shadow: 0 0 0 1px rgba(232,68,10,0.2), 0 8px 24px rgba(232,68,10,0.3); }
+  50% { box-shadow: 0 0 0 4px rgba(232,68,10,0.1), 0 8px 32px rgba(232,68,10,0.5); }
+}
+@media (max-width: 768px) {
+  .chat-widget { bottom: 20px; right: 16px; }
+  .chat-box { width: calc(100vw - 32px); right: 0; }
+  .chat-messages { height: 240px; }
+}
 </style>
 
 <div class="chat-widget">
   <div class="chat-box" id="chatBox">
+    <div class="chat-box-topline"></div>
     <div class="chat-header">
-      <div class="chat-header-icon">🎮</div>
-      <div class="chat-header-info">
-        <h4>HitPoint Асистент</h4>
-        <p><span class="chat-status-dot"></span>ONLINE · ВІДПОВІДАЄ МИТТЄВО</p>
+      <div class="chat-header-badge">
+        <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
       </div>
-      <button onclick="clearChat()" title="Очистити чат" style="margin-left:auto;background:none;border:none;cursor:pointer;color:#444;font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:4px 8px;transition:color 0.2s;" onmouseenter="this.style.color='var(--orange)'" onmouseleave="this.style.color='#444'">CLEAR</button>
+      <div>
+        <div class="chat-header-title">HIT<span>POINT</span> SUPPORT</div>
+        <div class="chat-header-sub"><span class="chat-status-dot"></span>ONLINE · AI_ASSISTANT_V1</div>
+      </div>
+      <button onclick="clearChat()" style="margin-left:auto;background:none;border:1px solid #1a1a1a;cursor:pointer;color:#2a2a2a;font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 8px;transition:all 0.2s;" onmouseenter="this.style.color='var(--orange)';this.style.borderColor='rgba(232,68,10,0.4)'" onmouseleave="this.style.color='#2a2a2a';this.style.borderColor='#1a1a1a'">CLR</button>
     </div>
     <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-input-row">
@@ -1927,6 +1877,7 @@ reveals.forEach(el => observer.observe(el));
         <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
       </button>
     </div>
+    <div class="chat-footer-tag">[ HITPOINT_SCHOOL · AI_SUPPORT ]</div>
   </div>
   <button class="chat-toggle" id="chatToggle">
     <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
@@ -1934,249 +1885,135 @@ reveals.forEach(el => observer.observe(el));
 </div>
 
 <script>
-const SYSTEM = `Ти — AI-асистент школи HitPoint School. Спілкуйся виключно українською мовою. Тон: короткий, технічний, мотиваційний — як у геймдев-художника, а не менеджера.
+(function() {
+  const chatBox = document.getElementById('chatBox');
+  const chatToggle = document.getElementById('chatToggle');
+  const chatMessages = document.getElementById('chatMessages');
+  const chatInput = document.getElementById('chatInput');
+  const chatSend = document.getElementById('chatSend');
+  let chatHistory = [];
+  let chatLoading = false;
+  let chatOpened = false;
 
-Школа HitPoint School:
-- Перший курс: інтенсив з текстурування (3 тижні), старт вересень 2025
-- Викладач: AAA-художник з досвідом роботи на великих франшизах (Call of Duty тощо)
-- Напрямки: 3D Modeling, Game Art, Weapons & Hard Surface, Unreal Engine
-- Інструменти: Substance Painter, ZBrush, Marmoset, Unreal Engine
-- Потік: 20-30 студентів максимум
-- Аудиторія: джуніори та люди що змінюють професію
-
-Правила:
-- Відповідай коротко — 2-3 речення максимум
-- Задавай одне питання за раз щоб зрозуміти рівень людини
-- Не вигадуй ціни та деталі яких не знаєш
-- Наприкінці пропонуй записатись у список очікування`;
-
-const chatBox = document.getElementById('chatBox');
-const chatToggle = document.getElementById('chatToggle');
-const chatMessages = document.getElementById('chatMessages');
-const chatInput = document.getElementById('chatInput');
-const chatSend = document.getElementById('chatSend');
-let chatHistory = [];
-let chatLoading = false;
-let chatOpened = false;
-
-// Save/load chat from localStorage
-function saveChatHistory() {
-  const msgs = [];
-  document.querySelectorAll('.cmsg').forEach(msg => {
-    const role = msg.classList.contains('user') ? 'user' : 'bot';
-    const text = msg.querySelector('.cbubble').innerHTML;
-    msgs.push({ role, text });
-  });
-  try { localStorage.setItem('hp_chat', JSON.stringify(msgs)); } catch(e) {}
-}
-
-function loadChatHistory() {
-  try {
-    const saved = localStorage.getItem('hp_chat');
-    if (!saved) return false;
-    const msgs = JSON.parse(saved);
-    if (!msgs.length) return false;
-    msgs.forEach(m => {
-      const msg = document.createElement('div');
-      msg.className = `cmsg ${m.role}`;
-      const av = document.createElement('div');
-      av.className = 'cmsg-av';
-      av.textContent = m.role === 'bot' ? '🎮' : '👤';
-      const bubble = document.createElement('div');
-      bubble.className = 'cbubble';
-      bubble.innerHTML = m.text;
-      msg.appendChild(av);
-      msg.appendChild(bubble);
-      // Re-attach chip click handlers
-      bubble.querySelectorAll('.chat-chip').forEach(btn => {
-        btn.onclick = () => { chatInput.value = btn.textContent; sendChat(); };
+  function addMsg(role, text, chips) {
+    const msg = document.createElement('div');
+    msg.className = 'cmsg ' + role;
+    const av = document.createElement('div');
+    av.className = 'cmsg-av';
+    if (role === 'bot') {
+        av.innerHTML = '<svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:var(--orange)"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>';
+      } else {
+        av.innerHTML = '<svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:#444"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
+      }
+    const bubble = document.createElement('div');
+    bubble.className = 'cbubble';
+    bubble.innerHTML = text.replace(/\n/g, '<br>');
+    if (chips && chips.length) {
+      const cd = document.createElement('div');
+      cd.className = 'chat-chips';
+      chips.forEach(function(c) {
+        const btn = document.createElement('button');
+        btn.className = 'chat-chip';
+        btn.textContent = c;
+        btn.onclick = function() { chatInput.value = c; sendMsg(); };
+        cd.appendChild(btn);
       });
-      chatMessages.appendChild(msg);
-    });
+      bubble.appendChild(cd);
+    }
+    msg.appendChild(av);
+    msg.appendChild(bubble);
+    chatMessages.appendChild(msg);
     chatMessages.scrollTop = chatMessages.scrollHeight;
-    return true;
-  } catch(e) { return false; }
-}
+  }
 
-function clearChat() {
-  chatMessages.innerHTML = '';
-  try { localStorage.removeItem('hp_chat'); } catch(e) {}
-  chatOpened = false;
-  addChatMsg('bot',
-    'Привіт! 👋 Я асистент HitPoint School.
-Який у тебе рівень у 3D зараз?',
-    ['Знаю основи 3D', 'Хочу змінити професію', 'Просто цікавлюсь']
-  );
-  saveChatHistory();
-}
+  function showTyping() {
+    const el = document.createElement('div');
+    el.className = 'chat-typing';
+    el.id = 'chatTyping';
+    el.innerHTML = '<div class="cmsg-av"><svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:var(--orange)"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg></div><div class="chat-dots"><div class="chat-dot"></div><div class="chat-dot"></div><div class="chat-dot"></div></div>';
+    chatMessages.appendChild(el);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
 
-chatToggle.addEventListener('click', () => {
-  const isOpen = chatBox.classList.toggle('open');
-  chatToggle.classList.toggle('open', isOpen);
-  if (isOpen && !chatOpened) {
-    chatOpened = true;
-    const loaded = loadChatHistory();
-    if (!loaded) {
-      setTimeout(() => {
-        addChatMsg('bot',
-          'Привіт! 👋 Я асистент HitPoint School.
-Який у тебе рівень у 3D зараз?',
-          ['Знаю основи 3D', 'Хочу змінити професію', 'Просто цікавлюсь']
-        );
-        saveChatHistory();
+  function getDemoReply(text) {
+    const t = text.toLowerCase();
+    if (t.includes('ціна') || t.includes('скільки') || t.includes('коштує'))
+      return { text: 'Ціни оголосимо ближче до старту. Але зараз відкрито передзапис — ранні учасники отримають кращі умови.\n\nЗаписати тебе у список очікування?', chips: ['Так, записати мене', 'Ще подумаю'] };
+    if (t.includes('виклад') || t.includes('хто веде'))
+      return { text: 'Викладач — практикуючий AAA-художник з досвідом роботи на великих франшизах, включно з Call of Duty. Не "колись працював" — а зараз, щодня.', chips: ['Хочу записатись', 'Розкажи про програму'] };
+    if (t.includes('програм') || t.includes('чому навч') || t.includes('що буде'))
+      return { text: '3 тижні інтенсиву: PBR-текстурування, Substance Painter, запікання карт, матеріали для UE5 і фінальний ассет у портфоліо.\n\nВсе як у реальній AAA-студії.', chips: ['Хочу записатись', 'Яка ціна?'] };
+    if (t.includes('запис') || t.includes('хочу') || t.includes('так'))
+      return { text: 'Відмінно! 🔥 Напиши свій email — і ти першим дізнаєшся про старт і отримаєш спеціальні умови.', chips: [] };
+    return { text: 'Привіт! Я асистент HitPoint School. Можу розповісти про курс, програму або записати тебе.\n\nЩо тебе цікавить?', chips: ['Програма курсу', 'Хто викладач?', 'Ціна та запис'] };
+  }
+
+  async function sendMsg() {
+    const text = chatInput.value.trim();
+    if (!text || chatLoading) return;
+    chatInput.value = '';
+    chatInput.style.height = 'auto';
+    chatLoading = true;
+    chatSend.disabled = true;
+    addMsg('user', text);
+    chatHistory.push({ role: 'user', content: text });
+    showTyping();
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: chatHistory })
+      });
+      document.getElementById('chatTyping')?.remove();
+      if (res.ok) {
+        const data = await res.json();
+        const reply = data.reply || 'Щось пішло не так 😔';
+        chatHistory.push({ role: 'assistant', content: reply });
+        addMsg('bot', reply);
+      } else {
+        const r = getDemoReply(text);
+        chatHistory.push({ role: 'assistant', content: r.text });
+        addMsg('bot', r.text, r.chips);
+      }
+    } catch(e) {
+      document.getElementById('chatTyping')?.remove();
+      const r = getDemoReply(text);
+      chatHistory.push({ role: 'assistant', content: r.text });
+      addMsg('bot', r.text, r.chips);
+    }
+
+    chatLoading = false;
+    chatSend.disabled = false;
+  }
+
+  window.clearChat = function() {
+    chatMessages.innerHTML = '';
+    chatHistory = [];
+    chatOpened = false;
+    addMsg('bot', 'Привіт! 👋 Я асистент HitPoint School.\nЯкий у тебе рівень у 3D зараз?', ['Знаю основи 3D', 'Хочу змінити професію', 'Просто цікавлюсь']);
+  };
+
+  chatToggle.addEventListener('click', function() {
+    const isOpen = chatBox.classList.toggle('open');
+    chatToggle.classList.toggle('open', isOpen);
+    if (isOpen && !chatOpened) {
+      chatOpened = true;
+      setTimeout(function() {
+        addMsg('bot', 'Привіт! 👋 Я асистент HitPoint School.\nЯкий у тебе рівень у 3D зараз?', ['Знаю основи 3D', 'Хочу змінити професію', 'Просто цікавлюсь']);
       }, 300);
     }
-  }
-});
+  });
 
-function addChatMsg(role, text, chips = []) {
-  const msg = document.createElement('div');
-  msg.className = `cmsg ${role}`;
-  const av = document.createElement('div');
-  av.className = 'cmsg-av';
-  av.textContent = role === 'bot' ? '🎮' : '👤';
-  const bubble = document.createElement('div');
-  bubble.className = 'cbubble';
-  bubble.innerHTML = text.replace(/
-/g, '<br>');
-  if (chips.length) {
-    const cd = document.createElement('div');
-    cd.className = 'chat-chips';
-    chips.forEach(c => {
-      const btn = document.createElement('button');
-      btn.className = 'chat-chip';
-      btn.textContent = c;
-      btn.onclick = () => { chatInput.value = c; sendChat(); };
-      cd.appendChild(btn);
-    });
-    bubble.appendChild(cd);
-  }
-  msg.appendChild(av);
-  msg.appendChild(bubble);
-  chatMessages.appendChild(msg);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-  try { saveChatHistory(); } catch(e) {}
-}
-
-function showChatTyping() {
-  const el = document.createElement('div');
-  el.className = 'chat-typing'; el.id = 'chatTyping';
-  el.innerHTML = '<div class="cmsg-av" style="background:var(--orange);width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px;">🎮</div><div class="chat-dots"><div class="chat-dot"></div><div class="chat-dot"></div><div class="chat-dot"></div></div>';
-  chatMessages.appendChild(el);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-function getDemoReply(text) {
-  const t = text.toLowerCase();
-  
-  if (t.includes('знаю основи') || t.includes('джуніор') || t.includes('junior')) {
-    return { text: 'Чудово! Якщо вже знаєш основи — інтенсив з текстурування саме для тебе. Покажемо реальний AAA-пайплайн, якого немає на YouTube.
-
-Який софт вже використовуєш?', chips: ['Blender', 'Maya / 3ds Max', 'ZBrush', 'Поки нічого'] };
-  }
-  if (t.includes('змін') || t.includes('профес') || t.includes('з нуля') || t.includes('новачок')) {
-    return { text: 'Геймдев — один з небагатьох ринків де можна змінити професію і одразу вийти на міжнародний рівень.
-
-З якої сфери переходиш?', chips: ['Дизайн / ілюстрація', 'IT / розробка', 'Інша сфера'] };
-  }
-  if (t.includes('blender') || t.includes('maya') || t.includes('3ds') || t.includes('zbrush')) {
-    return { text: 'Добре! На інтенсиві працюємо в Substance Painter, Marmoset і UE5 — це стандарт AAA-студій зараз.
-
-Цікавить старт у вересні?', chips: ['Так, хочу записатись', 'Розкажи більше про програму', 'Яка ціна?'] };
-  }
-  if (t.includes('ціна') || t.includes('скільки') || t.includes('коштує') || t.includes('вартість')) {
-    return { text: 'Ціни оголосимо ближче до старту. Але зараз відкрита передзапис — місць всього 20-30, і ранні учасники отримають кращі умови.
-
-Записати тебе у список очікування?', chips: ['Так, записати мене', 'Ще подумаю'] };
-  }
-  if (t.includes('так') || t.includes('записати') || t.includes('хочу') || t.includes('запис')) {
-    return { text: 'Відмінно! 🔥 Напиши свій email — і ти першим дізнаєшся про старт і отримаєш спеціальні умови для ранніх учасників.', chips: [] };
-  }
-  if (t.includes('програм') || t.includes('чому навч') || t.includes('модул')) {
-    return { text: '3 тижні інтенсиву: PBR-текстурування, Substance Painter пайплайн, запікання карт, матеріали для UE5 і фінальний ассет у портфоліо.
-
-Все як у реальній AAA-студії — без "навчальних" спрощень.', chips: ['Хто викладач?', 'Скільки годин на тиждень?', 'Хочу записатись'] };
-  }
-  if (t.includes('виклад') || t.includes('хто') || t.includes('вчитель') || t.includes('автор')) {
-    return { text: 'Викладач — практикуючий AAA-художник з досвідом роботи на великих франшизах, включно з Call of Duty.
-
-Не "колись працював" — а зараз, щодня. Саме це і відрізняє нас від інших курсів.', chips: ['Де можна побачити його роботи?', 'Хочу записатись'] };
-  }
-  if (t.includes('робот') || t.includes('портфол') || t.includes('приклад')) {
-    return { text: 'Роботи викладача — прямо на цьому сайті, можеш прокрутити вгору. Це реальні production-ассети, не навчальні вправи. 👆', chips: ['Вражає!', 'Хочу так само', 'Записатись на інтенсив'] };
-  }
-  if (t.includes('вражає') || t.includes('круто') || t.includes('клас') || t.includes('хочу так')) {
-    return { text: 'Саме для цього і існує HitPoint School 🎯
-
-Запишись у список очікування — старт у вересні, місць мало.', chips: ['Записати мене!'] };
-  }
-  if (t.includes('@') || t.includes('gmail') || t.includes('email') || t.includes('пошт')) {
-    return { text: 'Прийнято! ✅ Ти у списку очікування. Ми напишемо першим як тільки відкриємо реєстрацію — з усіма деталями і спеціальними умовами.
-
-До зустрічі на інтенсиві! 🔥', chips: [] };
-  }
-  if (t.includes('дякую') || t.includes('дяк') || t.includes('спасиб')) {
-    return { text: 'Будь ласка! Якщо виникнуть питання — завжди тут. До зустрічі на HitPoint School! 🎮', chips: [] };
-  }
-  if (t.includes('format') || t.includes('онлайн') || t.includes('офлайн') || t.includes('формат')) {
-    return { text: 'Інтенсив проходить онлайн — живі заняття + записи, щоб можна було переглянути в будь-який час. Плюс закритий чат де викладач особисто розбирає домашні роботи.', chips: ['Скільки часу на тиждень?', 'Хочу записатись'] };
-  }
-  if (t.includes('час') || t.includes('годин') || t.includes('навантаж')) {
-    return { text: '2-3 заняття на тиждень по 1.5-2 години. Плюс домашні завдання — в середньому 3-4 години на тиждень.
-
-Загалом реально поєднувати з роботою.', chips: ['Зрозуміло, хочу записатись', 'Ще є питання'] };
-  }
-
-  // Default
-  const defaults = [
-    { text: 'Цікаве питання! Уточни трохи більше — щоб я міг дати точну відповідь по HitPoint School. 🎯', chips: ['Про інтенсив', 'Про викладача', 'Хочу записатись'] },
-    { text: 'Розкажи трохи більше про себе — тоді зможу підказати чи підійде тобі наш інтенсив з текстурування.', chips: ['Знаю основи 3D', 'Хочу змінити професію', 'Просто цікавлюсь'] },
-  ];
-  return defaults[Math.floor(Math.random() * defaults.length)];
-}
-
-async function sendChat() {
-  const text = chatInput.value.trim();
-  if (!text || chatLoading) return;
-  chatInput.value = '';
-  chatInput.style.height = 'auto';
-  chatLoading = true;
-  chatSend.disabled = true;
-  addChatMsg('user', text);
-  chatHistory.push({ role: 'user', content: text });
-  showChatTyping();
-
-  try {
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: chatHistory })
-    });
-    document.getElementById('chatTyping')?.remove();
-    if (res.ok) {
-      const data = await res.json();
-      const reply = data.reply || 'Щось пішло не так 😔';
-      chatHistory.push({ role: 'assistant', content: reply });
-      addChatMsg('bot', reply);
-    } else {
-      const reply = getDemoReply(text);
-      chatHistory.push({ role: 'assistant', content: reply.text });
-      addChatMsg('bot', reply.text, reply.chips);
-    }
-  } catch(e) {
-    document.getElementById('chatTyping')?.remove();
-    const reply = getDemoReply(text);
-    chatHistory.push({ role: 'assistant', content: reply.text });
-    addChatMsg('bot', reply.text, reply.chips);
-  }
-
-  chatLoading = false;
-  chatSend.disabled = false;
-}
-
-chatSend.addEventListener('click', sendChat);
-chatInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); } });
-chatInput.addEventListener('input', () => { chatInput.style.height = 'auto'; chatInput.style.height = Math.min(chatInput.scrollHeight, 80) + 'px'; });
+  chatSend.addEventListener('click', sendMsg);
+  chatInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
+  });
+  chatInput.addEventListener('input', function() {
+    chatInput.style.height = 'auto';
+    chatInput.style.height = Math.min(chatInput.scrollHeight, 80) + 'px';
+  });
+})();
 </script>
 
 
