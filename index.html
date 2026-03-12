@@ -1692,7 +1692,6 @@ reveals.forEach(el => observer.observe(el));
 
 <!-- CHATBOT -->
 <style>
-<style>
 .chat-widget {
   position: fixed;
   bottom: 32px;
@@ -1865,8 +1864,8 @@ reveals.forEach(el => observer.observe(el));
         <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
       </div>
       <div>
-        <div class="chat-header-title">HIT<span>POINT</span> SUPPORT</div>
-        <div class="chat-header-sub"><span class="chat-status-dot"></span>ONLINE · AI_ASSISTANT_V1</div>
+        <div class="chat-header-title">HIT<span>POINT</span> BRO</div>
+        <div class="chat-header-sub"><span class="chat-status-dot"></span>ONLINE · HP_BRO_V1</div>
       </div>
       <button onclick="clearChat()" style="margin-left:auto;background:none;border:1px solid #1a1a1a;cursor:pointer;color:#2a2a2a;font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 8px;transition:all 0.2s;" onmouseenter="this.style.color='var(--orange)';this.style.borderColor='rgba(232,68,10,0.4)'" onmouseleave="this.style.color='#2a2a2a';this.style.borderColor='#1a1a1a'">CLR</button>
     </div>
@@ -1991,7 +1990,7 @@ reveals.forEach(el => observer.observe(el));
     chatMessages.innerHTML = '';
     chatHistory = [];
     chatOpened = false;
-    addMsg('bot', 'Привіт! 👋 Я асистент HitPoint School.\nЯкий у тебе рівень у 3D зараз?', ['Знаю основи 3D', 'Хочу змінити професію', 'Просто цікавлюсь']);
+    addMsg('bot', 'Йо! 🎮 Я твій HitPoint Bro.\nДопоможу вибрати курс або відповім на твої питання — питай!', ['Знаю основи 3D', 'Хочу змінити професію', 'Просто цікавлюсь']);
   };
 
   chatToggle.addEventListener('click', function() {
@@ -2000,7 +1999,7 @@ reveals.forEach(el => observer.observe(el));
     if (isOpen && !chatOpened) {
       chatOpened = true;
       setTimeout(function() {
-        addMsg('bot', 'Привіт! 👋 Я асистент HitPoint School.\nЯкий у тебе рівень у 3D зараз?', ['Знаю основи 3D', 'Хочу змінити професію', 'Просто цікавлюсь']);
+        addMsg('bot', 'Йо! 🎮 Я твій HitPoint Bro.\nДопоможу вибрати курс або відповім на твої питання — питай!', ['Знаю основи 3D', 'Хочу змінити професію', 'Просто цікавлюсь']);
       }, 300);
     }
   });
