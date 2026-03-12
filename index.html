@@ -1918,7 +1918,7 @@ reveals.forEach(el => observer.observe(el));
         <h4>HitPoint Асистент</h4>
         <p><span class="chat-status-dot"></span>ONLINE · ВІДПОВІДАЄ МИТТЄВО</p>
       </div>
-      <button onclick="clearChat()" title="Очистити чат" style="margin-left:auto;background:none;border:none;cursor:none;color:#444;font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:4px 8px;transition:color 0.2s;" onmouseenter="this.style.color='var(--orange)'" onmouseleave="this.style.color='#444'">CLEAR</button>
+      <button onclick="clearChat()" title="Очистити чат" style="margin-left:auto;background:none;border:none;cursor:pointer;color:#444;font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:4px 8px;transition:color 0.2s;" onmouseenter="this.style.color='var(--orange)'" onmouseleave="this.style.color='#444'">CLEAR</button>
     </div>
     <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-input-row">
@@ -2143,14 +2143,32 @@ async function sendChat() {
   chatLoading = true;
   chatSend.disabled = true;
   addChatMsg('user', text);
+  chatHistory.push({ role: 'user', content: text });
   showChatTyping();
 
-  // Simulate thinking delay
-  await new Promise(r => setTimeout(r, 800 + Math.random() * 600));
-  
-  document.getElementById('chatTyping')?.remove();
-  const reply = getDemoReply(text);
-  addChatMsg('bot', reply.text, reply.chips);
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: chatHistory })
+    });
+    document.getElementById('chatTyping')?.remove();
+    if (res.ok) {
+      const data = await res.json();
+      const reply = data.reply || 'Щось пішло не так 😔';
+      chatHistory.push({ role: 'assistant', content: reply });
+      addChatMsg('bot', reply);
+    } else {
+      const reply = getDemoReply(text);
+      chatHistory.push({ role: 'assistant', content: reply.text });
+      addChatMsg('bot', reply.text, reply.chips);
+    }
+  } catch(e) {
+    document.getElementById('chatTyping')?.remove();
+    const reply = getDemoReply(text);
+    chatHistory.push({ role: 'assistant', content: reply.text });
+    addChatMsg('bot', reply.text, reply.chips);
+  }
 
   chatLoading = false;
   chatSend.disabled = false;
