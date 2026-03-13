@@ -1947,6 +1947,31 @@ reveals.forEach(el => observer.observe(el));
     return { text: 'Привіт! Я асистент HitPoint School. Можу розповісти про курс, програму або записати тебе.\n\nЩо тебе цікавить?', chips: ['Програма курсу', 'Хто викладач?', 'Ціна та запис'] };
   }
 
+    // Detect email or phone in text and send to Formspree
+  async function trySubmitContact(text) {
+    const emailMatch = text.match(/[\w.-]+@[\w.-]+\.\w+/);
+    const phoneMatch = text.match(/[\+\d][\d\s\-\(\)]{7,}/);
+    if (!emailMatch && !phoneMatch) return;
+
+    // Collect name from chat history (first user message usually has name)
+    const userMsgs = chatHistory.filter(m => m.role === 'user').map(m => m.content);
+    const name = userMsgs[0] || 'Не вказано';
+
+    try {
+      await fetch('https://formspree.io/f/mdawkavr', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          source: 'HitPoint BRO Chat',
+          name: name,
+          email: emailMatch ? emailMatch[0] : 'Не вказано',
+          phone: phoneMatch ? phoneMatch[0] : 'Не вказано',
+          message: `Чат-лід: ${userMsgs.join(' | ')}`
+        })
+      });
+    } catch(e) { /* silent fail */ }
+  }
+
   async function sendMsg() {
     const text = chatInput.value.trim();
     if (!text || chatLoading) return;
@@ -1956,6 +1981,10 @@ reveals.forEach(el => observer.observe(el));
     chatSend.disabled = true;
     addMsg('user', text);
     chatHistory.push({ role: 'user', content: text });
+
+    // Check if user shared contact info
+    trySubmitContact(text);
+
     showTyping();
 
     try {
