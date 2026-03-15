@@ -1958,16 +1958,18 @@ reveals.forEach(el => observer.observe(el));
     const name = userMsgs[0] || 'Не вказано';
 
     try {
-      await fetch('https://formspree.io/f/mdawkavr', {
+      const chatForm = new FormData();
+      chatForm.append('name', name);
+      chatForm.append('email', emailMatch ? emailMatch[0] : 'Не вказано');
+      chatForm.append('phone', phoneMatch ? phoneMatch[0] : 'Не вказано');
+      chatForm.append('message', `Чат-лід: ${userMsgs.join(' | ')}`);
+      chatForm.append('_subject', '💬 Заявка з чату — HitPoint BRO');
+      chatForm.append('_template', 'table');
+      chatForm.append('_captcha', 'false');
+      await fetch('https://formsubmit.co/ajax/info@hitpointschool.com', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          source: 'HitPoint BRO Chat',
-          name: name,
-          email: emailMatch ? emailMatch[0] : 'Не вказано',
-          phone: phoneMatch ? phoneMatch[0] : 'Не вказано',
-          message: `Чат-лід: ${userMsgs.join(' | ')}`
-        })
+        headers: { 'Accept': 'application/json' },
+        body: chatForm
       });
     } catch(e) { /* silent fail */ }
   }
@@ -2052,7 +2054,7 @@ reveals.forEach(el => observer.observe(el));
     <!-- Top bar -->
     <div style="background:#111;border-bottom:1px solid #1e1e1e;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;">
       <span style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.15em;text-transform:uppercase;">[ JOIN_ENROLLMENT_V4.0 ]</span>
-      <button onclick="closePopup()" style="background:none;border:none;color:#555;font-size:20px;cursor:pointer;line-height:1;transition:color 0.2s;" onmouseenter="this.style.color='var(--orange)'" onmouseleave="this.style.color='#555'">✕</button>
+      <button onclick="var o=document.getElementById('popup-overlay');if(o){o.style.display='none';document.body.style.overflow='';}" style="background:none;border:none;color:#555;font-size:20px;cursor:pointer;line-height:1;transition:color 0.2s;" onmouseenter="this.style.color='var(--orange)'" onmouseleave="this.style.color='#555'">✕</button>
     </div>
 
     <!-- Content -->
@@ -2120,10 +2122,17 @@ async function submitPopup() {
   btn.disabled = true;
 
   try {
-    const res = await fetch('https://formspree.io/f/mdawkavr', {
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('phone', phone || 'Не вказано');
+    formData.append('_subject', '🎯 Нова заявка — HitPoint School');
+    formData.append('_template', 'table');
+    formData.append('_captcha', 'false');
+    const res = await fetch('https://formsubmit.co/ajax/info@hitpointschool.com', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, phone })
+      headers: { 'Accept': 'application/json' },
+      body: formData
     });
     if (res.ok) {
       document.getElementById('popup-form').style.display = 'none';
