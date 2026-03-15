@@ -1291,6 +1291,51 @@ footer {
 }
 
 </style>
+
+<script>
+async function submitPopup() {
+  const name = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const err = document.getElementById('popup-error');
+  if (!name || !email) { err.style.display = 'block'; return; }
+  err.style.display = 'none';
+
+  const btn = document.querySelector('#popup-form button');
+  btn.textContent = 'ВІДПРАВКА...';
+  btn.disabled = true;
+
+  try {
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('phone', phone || 'Не вказано');
+    formData.append('_subject', '🎯 Нова заявка — HitPoint School');
+    formData.append('_template', 'table');
+    formData.append('_captcha', 'false');
+    const res = await fetch('https://formsubmit.co/ajax/info@hitpointschool.com', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: formData
+    });
+    if (res.ok) {
+      document.getElementById('popup-form').style.display = 'none';
+      document.getElementById('popup-success').style.display = 'block';
+      setTimeout(closePopup, 3000);
+    } else {
+      btn.textContent = 'НАДІСЛАТИ →';
+      btn.disabled = false;
+      err.textContent = '[ ПОМИЛКА ВІДПРАВКИ — СПРОБУЙ ЩЕ РАЗ ]';
+      err.style.display = 'block';
+    }
+  } catch(e) {
+    btn.textContent = 'НАДІСЛАТИ →';
+    btn.disabled = false;
+    err.textContent = '[ ПОМИЛКА МЕРЕЖІ — ПЕРЕВІР ІНТЕРНЕТ ]';
+    err.style.display = 'block';
+  }
+}
+</script>
 </head>
 <body>
 
@@ -2109,47 +2154,6 @@ function closePopup() {
   document.getElementById('popup-overlay').style.display = 'none';
   document.body.style.overflow = '';
 }
-async function submitPopup() {
-  const name = document.getElementById('f-name').value.trim();
-  const email = document.getElementById('f-email').value.trim();
-  const phone = document.getElementById('f-phone').value.trim();
-  const err = document.getElementById('popup-error');
-  if (!name || !email) { err.style.display = 'block'; return; }
-  err.style.display = 'none';
-
-  const btn = document.querySelector('#popup-form button');
-  btn.textContent = 'ВІДПРАВКА...';
-  btn.disabled = true;
-
-  try {
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('phone', phone || 'Не вказано');
-    formData.append('_subject', '🎯 Нова заявка — HitPoint School');
-    formData.append('_template', 'table');
-    formData.append('_captcha', 'false');
-    const res = await fetch('https://formsubmit.co/ajax/info@hitpointschool.com', {
-      method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: formData
-    });
-    if (res.ok) {
-      document.getElementById('popup-form').style.display = 'none';
-      document.getElementById('popup-success').style.display = 'block';
-      setTimeout(closePopup, 3000);
-    } else {
-      btn.textContent = 'НАДІСЛАТИ →';
-      btn.disabled = false;
-      err.textContent = '[ ПОМИЛКА ВІДПРАВКИ — СПРОБУЙ ЩЕ РАЗ ]';
-      err.style.display = 'block';
-    }
-  } catch(e) {
-    btn.textContent = 'НАДІСЛАТИ →';
-    btn.disabled = false;
-    err.textContent = '[ ПОМИЛКА МЕРЕЖІ — ПЕРЕВІР ІНТЕРНЕТ ]';
-    err.style.display = 'block';
-  }
-}
+// submitPopup moved to head
 // Close on overlay click
 do
